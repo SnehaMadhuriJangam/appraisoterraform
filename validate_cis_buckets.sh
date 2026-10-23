@@ -32,7 +32,8 @@ gcloud storage buckets list \
   --format="table(
     name:label='BUCKET NAME',
     publicAccessPrevention:label='PUBLIC ACCESS PREV (CIS 3.3)',
-    uniformBucketLevelAccess.enabled:label='UBLA ENABLED (CIS 3.3)',
+    labels.public_access:label='PUBLIC ACCESS',
+    labels.confidentiality_status:label='CONFIDENTIALITY (PUBLIC DISABLED = CONFIDENTIAL)',
     labels.category_id:label='CATEGORY (CIS 3.2)',
     labels.data_class:label='TIER (CIS 3.7)'
   )"

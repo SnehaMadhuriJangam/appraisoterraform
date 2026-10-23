@@ -36,7 +36,7 @@ Write-Host "==========================================================" -Foregro
 Write-Host "`n[*] Step 1: Generating Inventory & Access Configuration (CIS 3.2, 3.3, 3.7)..." -ForegroundColor Yellow
 gcloud storage buckets list `
   --project="$ProjectId" `
-  --format="table(name:label='BUCKET NAME', publicAccessPrevention:label='PUBLIC ACCESS PREV (CIS 3.3)', uniformBucketLevelAccess.enabled:label='UBLA ENABLED (CIS 3.3)', labels.category_id:label='CATEGORY (CIS 3.2)', labels.data_class:label='TIER (CIS 3.7)')"
+  --format="table(name:label='BUCKET NAME', publicAccessPrevention:label='PUBLIC ACCESS PREV (CIS 3.3)', labels.public_access:label='PUBLIC ACCESS', labels.confidentiality_status:label='CONFIDENTIALITY (PUBLIC DISABLED = CONFIDENTIAL)', labels.category_id:label='CATEGORY (CIS 3.2)', labels.data_class:label='TIER (CIS 3.7)')"
 
 # 2. Validating Lifecycle Retention Rules
 Write-Host "`n[*] Step 2: Validating Lifecycle Retention Rules (CIS 3.4)..." -ForegroundColor Yellow
