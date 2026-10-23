@@ -14,8 +14,10 @@ if [ -z "$1" ]; then
 fi
 
 PROJECT_ID="$1"
+TARGET_BUCKET="${2:-${PROJECT_ID}-appraiso-evidence-dev}"
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 EVIDENCE_FILE="CIS_3_Storage_Evidence_${TIMESTAMP}.json"
+EVIDENCE_CSV="CIS_3_Storage_Evidence_${TIMESTAMP}.csv"
 
 echo "=========================================================="
 echo " Starting CIS Control Validation for Project: $PROJECT_ID"
@@ -53,12 +55,27 @@ for BUCKET in $BUCKETS; do
 done
 
 echo ""
-echo "[*] Step 3: Saving Full Machine-Readable JSON Evidence for Auditor..."
+echo "[*] Step 3: Saving Full Machine-Readable JSON & CSV Evidence for Auditor..."
 gcloud storage buckets list \
   --project="$PROJECT_ID" \
   --format="json(name, location, publicAccessPrevention, uniformBucketLevelAccess, labels, lifecycle)" > "$EVIDENCE_FILE"
 
+gcloud storage buckets list \
+  --project="$PROJECT_ID" \
+  --format="csv(name:label='BUCKET_NAME', location:label='LOCATION', publicAccessPrevention:label='PUBLIC_ACCESS_PREVENTION_CIS_3_3', uniformBucketLevelAccess.enabled:label='UBLA_ENABLED_CIS_3_3', labels.category_id:label='CATEGORY_ID_CIS_3_2', labels.data_class:label='DATA_CLASS_CIS_3_7', labels.retention_period:label='RETENTION_PERIOD_CIS_3_4', labels.managed_by:label='MANAGED_BY')" > "$EVIDENCE_CSV"
+
+# 4. Uploading Evidence to Secure Cloud Storage Bucket
+echo ""
+echo "[*] Step 4: Archiving Evidence to gs://${TARGET_BUCKET}/cis-evidence/ ..."
+gcloud storage cp "$EVIDENCE_FILE" "$EVIDENCE_CSV" "gs://${TARGET_BUCKET}/cis-evidence/"
+if [ -f "CIS_3_TECHNICAL_DATA_INVENTORY.csv" ]; then
+  gcloud storage cp "CIS_3_TECHNICAL_DATA_INVENTORY.csv" "gs://${TARGET_BUCKET}/cis-evidence/"
+fi
+
 echo "=========================================================="
-echo " Evidence file generated successfully: $EVIDENCE_FILE"
-echo " You can attach this file directly to Review Items R01 & R03."
+echo " Evidence files generated and archived successfully:"
+echo "   Local JSON: $EVIDENCE_FILE"
+echo "   Local CSV:  $EVIDENCE_CSV"
+echo "   Cloud GCS:  gs://${TARGET_BUCKET}/cis-evidence/"
+echo " You can attach these files directly to Review Items R01 & R03."
 echo "=========================================================="
