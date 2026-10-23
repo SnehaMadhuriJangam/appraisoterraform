@@ -63,7 +63,7 @@ gcloud storage buckets list `
 
 gcloud storage buckets list `
   --project="$ProjectId" `
-  --format="csv(name:label='BUCKET_NAME', location:label='LOCATION', publicAccessPrevention:label='PUBLIC_ACCESS_PREVENTION_CIS_3_3', uniformBucketLevelAccess.enabled:label='UBLA_ENABLED_CIS_3_3', labels.category_id:label='CATEGORY_ID_CIS_3_2', labels.data_class:label='DATA_CLASS_CIS_3_7', labels.retention_period:label='RETENTION_PERIOD_CIS_3_4', labels.managed_by:label='MANAGED_BY')" | Out-File -FilePath "$EVIDENCE_CSV" -Encoding utf8
+  --format="csv(name:label='BUCKET_NAME', location:label='LOCATION', publicAccessPrevention:label='PUBLIC_ACCESS_PREVENTION_CIS_3_3', uniformBucketLevelAccess.enabled:label='UBLA_ENABLED_CIS_3_3', labels.category_id:label='CATEGORY_ID_CIS_3_2', labels.data_class:label='DATA_CLASS_CIS_3_7', labels.public_access:label='PUBLIC_ACCESS_TAG', labels.confidentiality_status:label='CONFIDENTIALITY_STATUS', labels.retention_period:label='RETENTION_PERIOD_CIS_3_4', labels.managed_by:label='MANAGED_BY')" | Out-File -FilePath "$EVIDENCE_CSV" -Encoding utf8
 
 # 4. Uploading Evidence to Secure Cloud Storage Bucket
 Write-Host "`n[*] Step 4: Archiving Evidence to gs://${TargetBucket}/cis-evidence/ ..." -ForegroundColor Yellow

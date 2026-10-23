@@ -62,7 +62,7 @@ gcloud storage buckets list \
 
 gcloud storage buckets list \
   --project="$PROJECT_ID" \
-  --format="csv(name:label='BUCKET_NAME', location:label='LOCATION', publicAccessPrevention:label='PUBLIC_ACCESS_PREVENTION_CIS_3_3', uniformBucketLevelAccess.enabled:label='UBLA_ENABLED_CIS_3_3', labels.category_id:label='CATEGORY_ID_CIS_3_2', labels.data_class:label='DATA_CLASS_CIS_3_7', labels.retention_period:label='RETENTION_PERIOD_CIS_3_4', labels.managed_by:label='MANAGED_BY')" > "$EVIDENCE_CSV"
+  --format="csv(name:label='BUCKET_NAME', location:label='LOCATION', publicAccessPrevention:label='PUBLIC_ACCESS_PREVENTION_CIS_3_3', uniformBucketLevelAccess.enabled:label='UBLA_ENABLED_CIS_3_3', labels.category_id:label='CATEGORY_ID_CIS_3_2', labels.data_class:label='DATA_CLASS_CIS_3_7', labels.public_access:label='PUBLIC_ACCESS_TAG', labels.confidentiality_status:label='CONFIDENTIALITY_STATUS', labels.retention_period:label='RETENTION_PERIOD_CIS_3_4', labels.managed_by:label='MANAGED_BY')" > "$EVIDENCE_CSV"
 
 # 4. Uploading Evidence to Secure Cloud Storage Bucket
 echo ""

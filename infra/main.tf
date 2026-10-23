@@ -54,13 +54,15 @@ resource "google_storage_bucket" "evidence_bucket" {
     }
   }
 
-  # CIS 3.2 & CIS 3.7: In-Detail Inventory Labels
+  # CIS 3.2 & CIS 3.7: In-Detail Inventory Labels (Tagged based on Public Access)
   labels = {
-    environment      = var.environment
-    data_class       = "confidential"
-    category_id      = "dc-01"
-    managed_by       = "terraform"
-    retention_period = "365_days"
+    environment            = var.environment
+    data_class             = "confidential"
+    category_id            = "dc-01"
+    managed_by             = "terraform"
+    retention_period       = "365_days"
+    public_access          = "no"
+    confidentiality_status = "confidential"
   }
 }
 
@@ -86,12 +88,14 @@ resource "google_storage_bucket" "quarantine_bucket" {
     }
   }
 
-  # CIS 3.2 & CIS 3.7: In-Detail Inventory Labels
+  # CIS 3.2 & CIS 3.7: In-Detail Inventory Labels (Tagged based on Public Access)
   labels = {
-    environment      = var.environment
-    data_class       = "confidential"
-    category_id      = "dc-12"
-    managed_by       = "terraform"
-    retention_period = "30_days"
+    environment            = var.environment
+    data_class             = "confidential"
+    category_id            = "dc-12"
+    managed_by             = "terraform"
+    retention_period       = "30_days"
+    public_access          = "no"
+    confidentiality_status = "confidential"
   }
 }
